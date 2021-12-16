@@ -11,7 +11,7 @@ class WhatsAppBot < Sinatra::Base
     
     response = Twilio::TwiML::MessagingResponse.new
     response.message do |message|
-      message.body(answer["result"]["small_summary"] + "\n\nSee more at https://wearebuildingthefuture.com/?q=" + body.gsub!(/\s/, '+'))
+      message.body(answer["result"]["small_summary"] + "\n\nSee more at https://wearebuildingthefuture.com/?q=" + body.gsub(/\s/, '+'))
     end
 
     content_type "text/xml"
