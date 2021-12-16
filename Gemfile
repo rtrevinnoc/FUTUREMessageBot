@@ -12,3 +12,5 @@ gem "http", "~> 5.0"
 gem "envyable", "~> 1.2"
 
 gem "puma", "~> 5.5"
+
+gem "httparty", "~> 0.20.0"

@@ -1,10 +1,14 @@
 require "sinatra/base"
+require "httparty"
 
 class WhatsAppBot < Sinatra::Base
-  #use Rack::TwilioWebhookAuthentication, ENV['TWILIO_AUTH_TOKEN'], '/bot'
+  use Rack::TwilioWebhookAuthentication, ENV['TWILIO_AUTH_TOKEN'], '/bot'
 
   post '/bot' do
     body = params["Body"].downcase
+
+    answer = HTTParty.get('https://wearebuildingthefuture.com/_answer', :query => {"query" => body})
+    
     response = Twilio::TwiML::MessagingResponse.new
     response.message do |message|
       if body.include?("hi")
@@ -12,7 +16,7 @@ class WhatsAppBot < Sinatra::Base
       elsif body.include?("goodbye")
         message.body("Goodbye!")
       else
-        message.body("Can't recognize it")
+        message.body(answer["result"]["small_summary"])
       end
     end
 
